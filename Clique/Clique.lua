@@ -74,31 +74,9 @@ function Clique:Enable()
     if self.db.char.switchSpec then
         self.silentProfile = true
         self.talentGroup = CA_GetActiveSpecId() + 1
-        if self.talentGroup == 1 and self.db.char.spec1Profile then
-            self.db:SetProfile(self.db.char.spec1Profile)
-        elseif self.talentGroup == 2 and self.db.char.spec2Profile then
-            self.db:SetProfile(self.db.char.spec2Profile)
-        elseif self.talentGroup == 3 and self.db.char.spec3Profile then
-            self.db:SetProfile(self.db.char.spec3Profile)
-        elseif self.talentGroup == 4 and self.db.char.spec4Profile then
-            self.db:SetProfile(self.db.char.spec4Profile)
-        elseif self.talentGroup == 5 and self.db.char.spec5Profile then
-            self.db:SetProfile(self.db.char.spec5Profile)
-        elseif self.talentGroup == 6 and self.db.char.spec6Profile then
-            self.db:SetProfile(self.db.char.spec6Profile)
-        elseif self.talentGroup == 7 and self.db.char.spec7Profile then
-            self.db:SetProfile(self.db.char.spec7Profile)
-        elseif self.talentGroup == 8 and self.db.char.spec8Profile then
-            self.db:SetProfile(self.db.char.spec8Profile)
-        elseif self.talentGroup == 9 and self.db.char.spec9Profile then
-            self.db:SetProfile(self.db.char.spec9Profile)
-        elseif self.talentGroup == 10 and self.db.char.spec10Profile then
-            self.db:SetProfile(self.db.char.spec10Profile)
-        elseif self.talentGroup == 11 and self.db.char.spec11Profile then
-            self.db:SetProfile(self.db.char.spec11Profile)
-        elseif self.talentGroup == 12 and self.db.char.spec12Profile then
-            self.db:SetProfile(self.db.char.spec12Profile)
-        end
+				if self.db.char["spec"..self.talentGroup.."Profile"] then
+					self.db:SetProfile(self.db.char["spec"..self.talentGroup.."Profile"])
+				end
         self.silentProfile = false
     end
 
@@ -738,31 +716,12 @@ function Clique:COMMENTATOR_SKIRMISH_QUEUE_REQUEST(event, typeName, newGroup)
     if self.db.char.switchSpec then
         self:Print("Detected a talent spec change, changing profile")
         -- self:Print("Detected "..typeName..", changing profile to "..newGroup)
-        if newGroup == 0 and self.db.char.spec1Profile then
-            self.db:SetProfile(self.db.char.spec1Profile)
-        elseif newGroup == 1 and self.db.char.spec2Profile then
-            self.db:SetProfile(self.db.char.spec2Profile)
-        elseif newGroup == 2 and self.db.char.spec3Profile then
-            self.db:SetProfile(self.db.char.spec3Profile)
-        elseif newGroup == 3 and self.db.char.spec4Profile then
-            self.db:SetProfile(self.db.char.spec4Profile)
-        elseif newGroup == 4 and self.db.char.spec5Profile then
-            self.db:SetProfile(self.db.char.spec5Profile)
-        elseif newGroup == 5 and self.db.char.spec6Profile then
-            self.db:SetProfile(self.db.char.spec6Profile)
-        elseif newGroup == 6 and self.db.char.spec7Profile then
-            self.db:SetProfile(self.db.char.spec7Profile)
-        elseif newGroup == 7 and self.db.char.spec8Profile then
-            self.db:SetProfile(self.db.char.spec8Profile)
-        elseif newGroup == 8 and self.db.char.spec9Profile then
-            self.db:SetProfile(self.db.char.spec9Profile)
-        elseif newGroup == 9 and self.db.char.spec10Profile then
-            self.db:SetProfile(self.db.char.spec10Profile)
-        elseif newGroup == 10 and self.db.char.spec11Profile then
-            self.db:SetProfile(self.db.char.spec11Profile)
-        elseif newGroup == 11 and self.db.char.spec12Profile then
-            self.db:SetProfile(self.db.char.spec12Profile)
-        end
+
+				newGroup = newGroup + 1
+				if self.db.char["spec"..newGroup.."Profile"] then
+					self.db:SetProfile(self.db.char["spec"..newGroup.."Profile"])
+				end
+
         if CliqueFrame then
             CliqueFrame.title:SetText("Clique v. " .. Clique.version .. " - " .. tostring(Clique.db.keys.profile));
         end
