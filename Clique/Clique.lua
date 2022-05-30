@@ -11,9 +11,6 @@ if Clique.version == "wowi:revision" then Clique.version = "SVN" end
 
 local L = Clique.Locals
 
-function Clique:Initialize()
-end
-
 function Clique:Enable()
 	-- Grab the localisation header
 	L = Clique.Locals
@@ -33,6 +30,7 @@ function Clique:Enable()
 		},
         char = {
             switchSpec = false,
+            downClick = false,
         },
 	}
 	
@@ -141,8 +139,13 @@ function Clique:EnableFrames()
 		PartyMemberFrame3PetFrame,
 		PartyMemberFrame4PetFrame,
 		TargetFrame,
-		TargetofTargetFrame,
+		TargetFrameToT,
 		FocusFrame,
+        FocusFrameToT,
+        Boss1TargetFrame,
+        Boss2TargetFrame,
+        Boss3TargetFrame,
+        Boss4TargetFrame,
     }
     
     for i,frame in pairs(tbl) do
@@ -151,9 +154,9 @@ function Clique:EnableFrames()
 end	   
 
 function Clique:SpellBookButtonPressed(frame, button)
-    local id = SpellBook_GetSpellID(this:GetParent():GetID());
-    local texture = GetSpellTexture(id, AscensionSpellbookFrame.bookType)
-    local name, rank = GetSpellName(id, AscensionSpellbookFrame.bookType)
+    local texture = getglobal(frame:GetParent():GetName().."IconTexture"):GetTexture()
+    local name = getglobal(frame:GetParent():GetName().."SpellName"):GetText()
+	local rank = getglobal(frame:GetParent():GetName().."SubSpellName"):GetText()
 
     if rank == L.RACIAL_PASSIVE or rank == L.PASSIVE then
 		StaticPopup_Show("CLIQUE_PASSIVE_SKILL")
@@ -179,7 +182,7 @@ function Clique:SpellBookButtonPressed(frame, button)
     local t = {
 		["button"] = button,
 		["modifier"] = self:GetModifierText(),
-		["texture"] = GetSpellTexture(id, AscensionSpellbookFrame.bookType),
+		["texture"] = texture,
 		["type"] = type,
 		["arg1"] = name,
 		["arg2"] = rank,
@@ -271,7 +274,8 @@ function Clique:RegisterFrame(frame)
 		end
 	end
 
-	frame:RegisterForClicks("AnyUp")
+    -- Register AnyUp or AnyDown on this frame, depending on configuration
+    self:SetClickType(frame)
 
 	if frame:CanChangeAttribute() or frame:CanChangeProtectedState() then
 		if InCombatLockdown() then
@@ -722,6 +726,19 @@ function Clique:ACTIVE_TALENT_GROUP_CHANGED(event, newGroup, prevGroup)
     end
 end
 
+function Clique:SetClickType(frame)
+    local clickType = Clique.db.char.downClick and "AnyDown" or "AnyUp"
+    if frame then
+        frame:RegisterForClicks(clickType)
+    else
+        for frame, enabled in pairs(self.ccframes) do
+            if enabled then
+                frame:RegisterForClicks(clickType)
+            end
+        end
+    end
+end
+
 function Clique:EnableArenaFrames()
     local arenaFrames = {
         ArenaEnemyFrame1,
@@ -735,7 +752,6 @@ function Clique:EnableArenaFrames()
         rawset(self.ccframes, frame, true)
     end
 end
-
 
 function Clique:ADDON_LOADED(event, addon)
     if addon == "Blizzard_ArenaUI" then

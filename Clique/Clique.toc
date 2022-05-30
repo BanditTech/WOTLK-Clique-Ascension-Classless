@@ -1,11 +1,11 @@
 ## Interface: 30300 
 ## Title: Clique
-## Author: Cladhaire
+## Author: Cladhaire, Jobus
 ## Version: wowi:revision
-## Notes: Simply powerful click-casting interface
+## Notes: Simply powerful click-casting interface. Tailored for Ascension.
 ## SavedVariables: CliqueDB
 ## OptionalDeps: Dongle
-## X-Curse-Packaged-Version: r139-release
+## X-Curse-Packaged-Version: r143-release
 ## X-Curse-Project-Name: Clique
 ## X-Curse-Project-ID: clique
 ## X-Curse-Repository-ID: wow/clique/mainline

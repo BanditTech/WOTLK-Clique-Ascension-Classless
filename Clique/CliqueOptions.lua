@@ -12,7 +12,7 @@ local ENTRY_SIZE = 35
 local work = {}
 
 function Clique:OptionsOnLoad()
-    -- Create a set of buttons to hook the SpellbookFrame
+    -- Create a set of buttons to hook the AscensionSpellbookFrame
     self.spellbuttons = {}
     local onclick = function(frame, button) Clique:SpellBookButtonPressed(frame, button) end
     local onleave = function(button)
@@ -21,7 +21,7 @@ function Clique:OptionsOnLoad()
     end
 
     for i=1,12 do
-        local parent = getglobal("SpellButton"..i)
+        local parent = getglobal("AscensionSpellbookFrameContentSpellsSpellButton"..i)
         local button = CreateFrame("Button", "SpellButtonCliqueCover"..i, parent)
         button:SetID(parent:GetID())
         button:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square")
@@ -42,7 +42,7 @@ function Clique:OptionsOnLoad()
         self.spellbuttons[i] = button
     end
 
-    CreateFrame("CheckButton", "CliquePulloutTab", SpellButton1, "SpellBookSkillLineTabTemplate")
+    CreateFrame("CheckButton", "CliquePulloutTab", getglobal("AscensionSpellbookFrameContentSpellsSpellButton1"), "SpellBookSkillLineTabTemplate")
     CliquePulloutTab:SetNormalTexture("Interface\\AddOns\\Clique\\Images\\CliqueIcon")
     CliquePulloutTab:SetScript("OnClick", function() Clique:Toggle() end)
     CliquePulloutTab:SetScript("OnEnter", function() local i = 1 end)
@@ -158,9 +158,9 @@ function Clique:OptionsOnLoad()
 end
 
 function Clique:LEARNED_SPELL_IN_TAB()
+    local num = GetNumSpellTabs()
     CliquePulloutTab:ClearAllPoints()
-    -- CliquePulloutTab:SetPoint("TOPLEFT","SpellBookSkillLineTab"..(1),"TOPLEFT",0,80)
-    CliquePulloutTab:SetPoint("TOPLEFT","AscensionSpellbookFrameSideBarTab"..(1),"TOPLEFT",0,80)
+    CliquePulloutTab:SetPoint("BOTTOMLEFT", AscensionSpellbookFrameSideBarTab1,"TOPLEFT",0,10)
 end
 
 function Clique:ToggleSpellBookButtons()
@@ -265,7 +265,7 @@ function Clique:CreateOptionsFrame()
     local frame = CreateFrame("Frame", "CliqueFrame", CliquePulloutTab)
     frame:SetHeight(415)
     frame:SetWidth(400)
-    frame:SetPoint("LEFT", AscensionSpellbookFrame, "RIGHT", 15, 30)
+    frame:SetPoint("LEFT", AscensionSpellbookFrame, "RIGHT", 45, 30)
 	self:SkinFrame(frame)
 	frame:SetToplevel(true)
 	frame.title:SetText("Clique v. " .. Clique.version .. " - " .. tostring(Clique.db.keys.profile));
@@ -1854,8 +1854,11 @@ function Clique:CreateOptionsWidgets(parent)
     button:SetPoint("TOPRIGHT", -5, 3)
     button:SetScript("OnClick", function(self) Clique:ButtonOnClick(self) end)
 
-    local switchSpec = makeCheckbox(parent, "CliqueOptionsSpecSwitch", "Change profile when switching talent specs", 300)
-    switchSpec:SetPoint("TOPLEFT", 5, -25)
+    local downClick = makeCheckbox(parent, "CliqueOptionsAnyDown", L.DOWNCLICK_LABEL, 300)
+    downClick:SetPoint("TOPLEFT", 5, -25)
+
+    local switchSpec = makeCheckbox(parent, "CliqueOptionsSpecSwitch", L.SPECSWITCH_LABEL, 300)
+    switchSpec:SetPoint("TOPLEFT", 5, -45)
 
     local priDropdown = CreateFrame("Frame", "CliquePriSpecDropDown", parent, "UIDropDownMenuTemplate")
     priDropdown:ClearAllPoints()
@@ -1942,7 +1945,10 @@ function Clique:CreateOptionsWidgets(parent)
     local function refreshOptions(self)
         -- Hide the dropdowns if the spec switch option isn't selected
         local switchSpec = Clique.db.char.switchSpec
+        local downClick = Clique.db.char.downClick
         CliqueOptionsSpecSwitch:SetChecked(switchSpec)
+        CliqueOptionsAnyDown:SetChecked(downClick)
+
         if switchSpec then
             CliquePriSpecDropDown:Show()
             CliqueSecSpecDropDown:Show()
@@ -1957,6 +1963,7 @@ function Clique:CreateOptionsWidgets(parent)
             CliqueSecSpecDropDown:Hide()
         end
     end
+
     parent:SetScript("OnShow", refreshOptions)
     switchSpec:SetScript("OnClick", function(self)
         if Clique.db.char.switchSpec then
@@ -1966,5 +1973,14 @@ function Clique:CreateOptionsWidgets(parent)
         end
         refreshOptions(parent)
         Clique:UpdateClicks()
+    end)
+    downClick:SetScript("OnClick", function(self)
+        if Clique.db.char.downClick then
+            Clique.db.char.downClick = false
+        else
+            Clique.db.char.downClick = true
+        end
+        refreshOptions(parent)
+        Clique:SetClickType()
     end)
 end
