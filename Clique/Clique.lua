@@ -733,9 +733,9 @@ function Clique:ShowBindings()
 end
 
 function Clique:COMMENTATOR_SKIRMISH_QUEUE_REQUEST(event, typeName, newGroup)
-    -- if typeName == "ASCENSION_CA_SPECIALIZATION_ACTIVE_ID_CHANGED" then return end
+    if typeName ~= "ASCENSION_CA_SPECIALIZATION_ACTIVE_ID_CHANGED" then return end
 
-    if self.db.char.switchSpec and typeName == "ASCENSION_CA_SPECIALIZATION_ACTIVE_ID_CHANGED" then
+    if self.db.char.switchSpec then
         self:Print("Detected a talent spec change, changing profile")
         -- self:Print("Detected "..typeName..", changing profile to "..newGroup)
         if newGroup == 0 and self.db.char.spec1Profile then
