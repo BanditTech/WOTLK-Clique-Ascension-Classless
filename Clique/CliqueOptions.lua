@@ -598,8 +598,8 @@ function Clique:CreateOptionsFrame()
     button:SetPoint("LEFT", CliqueButtonSetProfile, "RIGHT", 3, 0)
     button:SetScript("OnClick", buttonFunc)
 
-    local frame = CreateFrame("FramE", "CliqueOptionsFrame", CliqueFrame)
-    frame:SetHeight(200)
+    local frame = CreateFrame("Frame", "CliqueOptionsFrame", CliqueFrame)
+    frame:SetHeight(500)
     frame:SetWidth(300)
     frame:SetPoint("CENTER", 0, 0)
     self:SkinFrame(frame)
@@ -1860,19 +1860,19 @@ function Clique:CreateOptionsWidgets(parent)
     local switchSpec = makeCheckbox(parent, "CliqueOptionsSpecSwitch", L.SPECSWITCH_LABEL, 300)
     switchSpec:SetPoint("TOPLEFT", 5, -45)
 
-    local priDropdown = CreateFrame("Frame", "CliquePriSpecDropDown", parent, "UIDropDownMenuTemplate")
-    priDropdown:ClearAllPoints()
-    priDropdown:SetPoint("TOPLEFT", switchSpec, "BOTTOMLEFT", 65, 0)
-    priDropdown:Show()
-    priDropdown.label = priDropdown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    priDropdown.label:SetText(L["Primary:"])
-    priDropdown.label:SetPoint("RIGHT", priDropdown, "LEFT", 0, 0)
-    priDropdown.label:SetHeight(16)
+    local Spec1DropDown = CreateFrame("Frame", "CliqueSpec1DropDown", parent, "UIDropDownMenuTemplate")
+    Spec1DropDown:ClearAllPoints()
+    Spec1DropDown:SetPoint("TOPLEFT", switchSpec, "BOTTOMLEFT", 65, 0)
+    Spec1DropDown:Show()
+    Spec1DropDown.label = Spec1DropDown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    Spec1DropDown.label:SetText(L["Spec 1:"])
+    Spec1DropDown.label:SetPoint("RIGHT", Spec1DropDown, "LEFT", 0, 0)
+    Spec1DropDown.label:SetHeight(16)
 
     local function initialize(self, level)
         local function OnClick(self)
-            UIDropDownMenu_SetSelectedID(priDropdown, self:GetID())
-            Clique.db.char.primaryProfile = self.value
+            UIDropDownMenu_SetSelectedID(Spec1DropDown, self:GetID())
+            Clique.db.char.spec1Profile = self.value
             Clique:UpdateClicks()
         end
 
@@ -1891,29 +1891,29 @@ function Clique:CreateOptionsWidgets(parent)
         end
     end
 
-    UIDropDownMenu_Initialize(priDropdown, initialize)
-    UIDropDownMenu_SetWidth(priDropdown, 175);
-    UIDropDownMenu_SetButtonWidth(priDropdown, 199)
-    UIDropDownMenu_JustifyText(priDropdown, "LEFT")
-    if Clique.db.char.primaryProfile then
-        UIDropDownMenu_SetSelectedValue(priDropdown, Clique.db.char.primaryProfile)
+    UIDropDownMenu_Initialize(Spec1DropDown, initialize)
+    UIDropDownMenu_SetWidth(Spec1DropDown, 175);
+    UIDropDownMenu_SetButtonWidth(Spec1DropDown, 199)
+    UIDropDownMenu_JustifyText(Spec1DropDown, "LEFT")
+    if Clique.db.char.spec1Profile then
+        UIDropDownMenu_SetSelectedValue(Spec1DropDown, Clique.db.char.spec1Profile)
     else
-        UIDropDownMenu_SetSelectedValue(priDropdown, Clique.db.keys.profile)
+        UIDropDownMenu_SetSelectedValue(Spec1DropDown, Clique.db.keys.profile)
     end
 
-    local secDropdown = CreateFrame("Frame", "CliqueSecSpecDropDown", parent, "UIDropDownMenuTemplate")
-    secDropdown:ClearAllPoints()
-    secDropdown:SetPoint("TOPLEFT", priDropdown, "BOTTOMLEFT", 0, 0)
-    secDropdown:Show()
-    secDropdown.label = secDropdown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    secDropdown.label:SetText(L["Secondary:"])
-    secDropdown.label:SetPoint("RIGHT", secDropdown, "LEFT", 0, 0)
-    secDropdown.label:SetHeight(16)
+    local Spec2DropDown = CreateFrame("Frame", "CliqueSpec2DropDown", parent, "UIDropDownMenuTemplate")
+    Spec2DropDown:ClearAllPoints()
+    Spec2DropDown:SetPoint("TOPLEFT", Spec1DropDown, "BOTTOMLEFT", 0, 0)
+    Spec2DropDown:Show()
+    Spec2DropDown.label = Spec2DropDown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    Spec2DropDown.label:SetText(L["Spec 2:"])
+    Spec2DropDown.label:SetPoint("RIGHT", Spec2DropDown, "LEFT", 0, 0)
+    Spec2DropDown.label:SetHeight(16)
 
     local function initialize(self, level)
         local function OnClick(self)
-            UIDropDownMenu_SetSelectedID(secDropdown, self:GetID())
-            Clique.db.char.secondaryProfile = self.value
+            UIDropDownMenu_SetSelectedID(Spec2DropDown, self:GetID())
+            Clique.db.char.spec2Profile = self.value
             Clique:UpdateClicks()
         end
 
@@ -1932,14 +1932,424 @@ function Clique:CreateOptionsWidgets(parent)
         end
     end
 
-    UIDropDownMenu_Initialize(secDropdown, initialize)
-    UIDropDownMenu_SetWidth(secDropdown, 175);
-    UIDropDownMenu_SetButtonWidth(secDropdown, 199)
-    UIDropDownMenu_JustifyText(secDropdown, "LEFT")
-    if Clique.db.char.secondaryProfile then
-        UIDropDownMenu_SetSelectedValue(secDropdown, Clique.db.char.secondaryProfile)
+    UIDropDownMenu_Initialize(Spec2DropDown, initialize)
+    UIDropDownMenu_SetWidth(Spec2DropDown, 175);
+    UIDropDownMenu_SetButtonWidth(Spec2DropDown, 199)
+    UIDropDownMenu_JustifyText(Spec2DropDown, "LEFT")
+    if Clique.db.char.spec2Profile then
+        UIDropDownMenu_SetSelectedValue(Spec2DropDown, Clique.db.char.spec2Profile)
     else
-        UIDropDownMenu_SetSelectedValue(secDropdown, Clique.db.keys.profile)
+        UIDropDownMenu_SetSelectedValue(Spec2DropDown, Clique.db.keys.profile)
+    end
+
+    local Spec3DropDown = CreateFrame("Frame", "CliqueSpec3DropDown", parent, "UIDropDownMenuTemplate")
+    Spec3DropDown:ClearAllPoints()
+    Spec3DropDown:SetPoint("TOPLEFT", Spec2DropDown, "BOTTOMLEFT", 0, 0)
+    Spec3DropDown:Show()
+    Spec3DropDown.label = Spec3DropDown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    Spec3DropDown.label:SetText(L["Spec 3:"])
+    Spec3DropDown.label:SetPoint("RIGHT", Spec3DropDown, "LEFT", 0, 0)
+    Spec3DropDown.label:SetHeight(16)
+
+    local function initialize(self, level)
+        local function OnClick(self)
+            UIDropDownMenu_SetSelectedID(Spec3DropDown, self:GetID())
+            Clique.db.char.spec3Profile = self.value
+            Clique:UpdateClicks()
+        end
+
+        local work = {}
+        for k,v in pairs(Clique.db.profiles) do 
+            table.insert(work, k)
+        end
+		table.sort(work) 
+
+        for idx,profile in ipairs(work) do
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = profile
+            info.func = OnClick
+            info.value = profile
+            UIDropDownMenu_AddButton(info, level)
+        end
+    end
+
+    UIDropDownMenu_Initialize(Spec3DropDown, initialize)
+    UIDropDownMenu_SetWidth(Spec3DropDown, 175);
+    UIDropDownMenu_SetButtonWidth(Spec3DropDown, 199)
+    UIDropDownMenu_JustifyText(Spec3DropDown, "LEFT")
+    if Clique.db.char.spec3Profile then
+        UIDropDownMenu_SetSelectedValue(Spec3DropDown, Clique.db.char.spec3Profile)
+    else
+        UIDropDownMenu_SetSelectedValue(Spec3DropDown, Clique.db.keys.profile)
+    end
+
+    local Spec4DropDown = CreateFrame("Frame", "CliqueSpec4DropDown", parent, "UIDropDownMenuTemplate")
+    Spec4DropDown:ClearAllPoints()
+    Spec4DropDown:SetPoint("TOPLEFT", Spec3DropDown, "BOTTOMLEFT", 0, 0)
+    Spec4DropDown:Show()
+    Spec4DropDown.label = Spec4DropDown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    Spec4DropDown.label:SetText(L["Spec 4:"])
+    Spec4DropDown.label:SetPoint("RIGHT", Spec4DropDown, "LEFT", 0, 0)
+    Spec4DropDown.label:SetHeight(16)
+
+    local function initialize(self, level)
+        local function OnClick(self)
+            UIDropDownMenu_SetSelectedID(Spec4DropDown, self:GetID())
+            Clique.db.char.spec4Profile = self.value
+            Clique:UpdateClicks()
+        end
+
+        local work = {}
+        for k,v in pairs(Clique.db.profiles) do 
+            table.insert(work, k)
+        end
+		table.sort(work) 
+
+        for idx,profile in ipairs(work) do
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = profile
+            info.func = OnClick
+            info.value = profile
+            UIDropDownMenu_AddButton(info, level)
+        end
+    end
+
+    UIDropDownMenu_Initialize(Spec4DropDown, initialize)
+    UIDropDownMenu_SetWidth(Spec4DropDown, 175);
+    UIDropDownMenu_SetButtonWidth(Spec4DropDown, 199)
+    UIDropDownMenu_JustifyText(Spec4DropDown, "LEFT")
+    if Clique.db.char.spec4Profile then
+        UIDropDownMenu_SetSelectedValue(Spec4DropDown, Clique.db.char.spec4Profile)
+    else
+        UIDropDownMenu_SetSelectedValue(Spec4DropDown, Clique.db.keys.profile)
+    end
+
+    local Spec5DropDown = CreateFrame("Frame", "CliqueSpec5DropDown", parent, "UIDropDownMenuTemplate")
+    Spec5DropDown:ClearAllPoints()
+    Spec5DropDown:SetPoint("TOPLEFT", Spec4DropDown, "BOTTOMLEFT", 0, 0)
+    Spec5DropDown:Show()
+    Spec5DropDown.label = Spec5DropDown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    Spec5DropDown.label:SetText(L["Spec 5:"])
+    Spec5DropDown.label:SetPoint("RIGHT", Spec5DropDown, "LEFT", 0, 0)
+    Spec5DropDown.label:SetHeight(16)
+
+    local function initialize(self, level)
+        local function OnClick(self)
+            UIDropDownMenu_SetSelectedID(Spec5DropDown, self:GetID())
+            Clique.db.char.spec5Profile = self.value
+            Clique:UpdateClicks()
+        end
+
+        local work = {}
+        for k,v in pairs(Clique.db.profiles) do 
+            table.insert(work, k)
+        end
+		table.sort(work) 
+
+        for idx,profile in ipairs(work) do
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = profile
+            info.func = OnClick
+            info.value = profile
+            UIDropDownMenu_AddButton(info, level)
+        end
+    end
+
+    UIDropDownMenu_Initialize(Spec5DropDown, initialize)
+    UIDropDownMenu_SetWidth(Spec5DropDown, 175);
+    UIDropDownMenu_SetButtonWidth(Spec5DropDown, 199)
+    UIDropDownMenu_JustifyText(Spec5DropDown, "LEFT")
+    if Clique.db.char.spec5Profile then
+        UIDropDownMenu_SetSelectedValue(Spec5DropDown, Clique.db.char.spec5Profile)
+    else
+        UIDropDownMenu_SetSelectedValue(Spec5DropDown, Clique.db.keys.profile)
+    end
+
+    local Spec6DropDown = CreateFrame("Frame", "CliqueSpec6DropDown", parent, "UIDropDownMenuTemplate")
+    Spec6DropDown:ClearAllPoints()
+    Spec6DropDown:SetPoint("TOPLEFT", Spec5DropDown, "BOTTOMLEFT", 0, 0)
+    Spec6DropDown:Show()
+    Spec6DropDown.label = Spec6DropDown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    Spec6DropDown.label:SetText(L["Spec 6:"])
+    Spec6DropDown.label:SetPoint("RIGHT", Spec6DropDown, "LEFT", 0, 0)
+    Spec6DropDown.label:SetHeight(16)
+
+    local function initialize(self, level)
+        local function OnClick(self)
+            UIDropDownMenu_SetSelectedID(Spec6DropDown, self:GetID())
+            Clique.db.char.spec6Profile = self.value
+            Clique:UpdateClicks()
+        end
+
+        local work = {}
+        for k,v in pairs(Clique.db.profiles) do 
+            table.insert(work, k)
+        end
+		table.sort(work) 
+
+        for idx,profile in ipairs(work) do
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = profile
+            info.func = OnClick
+            info.value = profile
+            UIDropDownMenu_AddButton(info, level)
+        end
+    end
+
+    UIDropDownMenu_Initialize(Spec6DropDown, initialize)
+    UIDropDownMenu_SetWidth(Spec6DropDown, 175);
+    UIDropDownMenu_SetButtonWidth(Spec6DropDown, 199)
+    UIDropDownMenu_JustifyText(Spec6DropDown, "LEFT")
+    if Clique.db.char.spec6Profile then
+        UIDropDownMenu_SetSelectedValue(Spec6DropDown, Clique.db.char.spec6Profile)
+    else
+        UIDropDownMenu_SetSelectedValue(Spec6DropDown, Clique.db.keys.profile)
+    end
+
+    local Spec7DropDown = CreateFrame("Frame", "CliqueSpec7DropDown", parent, "UIDropDownMenuTemplate")
+    Spec7DropDown:ClearAllPoints()
+    Spec7DropDown:SetPoint("TOPLEFT", Spec6DropDown, "BOTTOMLEFT", 0, 0)
+    Spec7DropDown:Show()
+    Spec7DropDown.label = Spec7DropDown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    Spec7DropDown.label:SetText(L["Spec 7:"])
+    Spec7DropDown.label:SetPoint("RIGHT", Spec7DropDown, "LEFT", 0, 0)
+    Spec7DropDown.label:SetHeight(16)
+
+    local function initialize(self, level)
+        local function OnClick(self)
+            UIDropDownMenu_SetSelectedID(Spec7DropDown, self:GetID())
+            Clique.db.char.spec7Profile = self.value
+            Clique:UpdateClicks()
+        end
+
+        local work = {}
+        for k,v in pairs(Clique.db.profiles) do 
+            table.insert(work, k)
+        end
+		table.sort(work) 
+
+        for idx,profile in ipairs(work) do
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = profile
+            info.func = OnClick
+            info.value = profile
+            UIDropDownMenu_AddButton(info, level)
+        end
+    end
+
+    UIDropDownMenu_Initialize(Spec7DropDown, initialize)
+    UIDropDownMenu_SetWidth(Spec7DropDown, 175);
+    UIDropDownMenu_SetButtonWidth(Spec7DropDown, 199)
+    UIDropDownMenu_JustifyText(Spec7DropDown, "LEFT")
+    if Clique.db.char.spec7Profile then
+        UIDropDownMenu_SetSelectedValue(Spec7DropDown, Clique.db.char.spec7Profile)
+    else
+        UIDropDownMenu_SetSelectedValue(Spec7DropDown, Clique.db.keys.profile)
+    end
+
+    local Spec8DropDown = CreateFrame("Frame", "CliqueSpec8DropDown", parent, "UIDropDownMenuTemplate")
+    Spec8DropDown:ClearAllPoints()
+    Spec8DropDown:SetPoint("TOPLEFT", Spec7DropDown, "BOTTOMLEFT", 0, 0)
+    Spec8DropDown:Show()
+    Spec8DropDown.label = Spec8DropDown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    Spec8DropDown.label:SetText(L["Spec 8:"])
+    Spec8DropDown.label:SetPoint("RIGHT", Spec8DropDown, "LEFT", 0, 0)
+    Spec8DropDown.label:SetHeight(16)
+
+    local function initialize(self, level)
+        local function OnClick(self)
+            UIDropDownMenu_SetSelectedID(Spec8DropDown, self:GetID())
+            Clique.db.char.spec8Profile = self.value
+            Clique:UpdateClicks()
+        end
+
+        local work = {}
+        for k,v in pairs(Clique.db.profiles) do 
+            table.insert(work, k)
+        end
+		table.sort(work) 
+
+        for idx,profile in ipairs(work) do
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = profile
+            info.func = OnClick
+            info.value = profile
+            UIDropDownMenu_AddButton(info, level)
+        end
+    end
+
+    UIDropDownMenu_Initialize(Spec8DropDown, initialize)
+    UIDropDownMenu_SetWidth(Spec8DropDown, 175);
+    UIDropDownMenu_SetButtonWidth(Spec8DropDown, 199)
+    UIDropDownMenu_JustifyText(Spec8DropDown, "LEFT")
+    if Clique.db.char.spec8Profile then
+        UIDropDownMenu_SetSelectedValue(Spec8DropDown, Clique.db.char.spec8Profile)
+    else
+        UIDropDownMenu_SetSelectedValue(Spec8DropDown, Clique.db.keys.profile)
+    end
+
+    local Spec9DropDown = CreateFrame("Frame", "CliqueSpec9DropDown", parent, "UIDropDownMenuTemplate")
+    Spec9DropDown:ClearAllPoints()
+    Spec9DropDown:SetPoint("TOPLEFT", Spec8DropDown, "BOTTOMLEFT", 0, 0)
+    Spec9DropDown:Show()
+    Spec9DropDown.label = Spec9DropDown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    Spec9DropDown.label:SetText(L["Spec 9:"])
+    Spec9DropDown.label:SetPoint("RIGHT", Spec9DropDown, "LEFT", 0, 0)
+    Spec9DropDown.label:SetHeight(16)
+
+    local function initialize(self, level)
+        local function OnClick(self)
+            UIDropDownMenu_SetSelectedID(Spec9DropDown, self:GetID())
+            Clique.db.char.spec9Profile = self.value
+            Clique:UpdateClicks()
+        end
+
+        local work = {}
+        for k,v in pairs(Clique.db.profiles) do 
+            table.insert(work, k)
+        end
+		table.sort(work) 
+
+        for idx,profile in ipairs(work) do
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = profile
+            info.func = OnClick
+            info.value = profile
+            UIDropDownMenu_AddButton(info, level)
+        end
+    end
+
+    UIDropDownMenu_Initialize(Spec9DropDown, initialize)
+    UIDropDownMenu_SetWidth(Spec9DropDown, 175);
+    UIDropDownMenu_SetButtonWidth(Spec9DropDown, 199)
+    UIDropDownMenu_JustifyText(Spec9DropDown, "LEFT")
+    if Clique.db.char.spec9Profile then
+        UIDropDownMenu_SetSelectedValue(Spec9DropDown, Clique.db.char.spec9Profile)
+    else
+        UIDropDownMenu_SetSelectedValue(Spec9DropDown, Clique.db.keys.profile)
+    end
+
+    local Spec10DropDown = CreateFrame("Frame", "CliqueSpec10DropDown", parent, "UIDropDownMenuTemplate")
+    Spec10DropDown:ClearAllPoints()
+    Spec10DropDown:SetPoint("TOPLEFT", Spec9DropDown, "BOTTOMLEFT", 0, 0)
+    Spec10DropDown:Show()
+    Spec10DropDown.label = Spec10DropDown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    Spec10DropDown.label:SetText(L["Spec 10:"])
+    Spec10DropDown.label:SetPoint("RIGHT", Spec10DropDown, "LEFT", 0, 0)
+    Spec10DropDown.label:SetHeight(16)
+
+    local function initialize(self, level)
+        local function OnClick(self)
+            UIDropDownMenu_SetSelectedID(Spec10DropDown, self:GetID())
+            Clique.db.char.spec10Profile = self.value
+            Clique:UpdateClicks()
+        end
+
+        local work = {}
+        for k,v in pairs(Clique.db.profiles) do 
+            table.insert(work, k)
+        end
+		table.sort(work) 
+
+        for idx,profile in ipairs(work) do
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = profile
+            info.func = OnClick
+            info.value = profile
+            UIDropDownMenu_AddButton(info, level)
+        end
+    end
+
+    UIDropDownMenu_Initialize(Spec10DropDown, initialize)
+    UIDropDownMenu_SetWidth(Spec10DropDown, 175);
+    UIDropDownMenu_SetButtonWidth(Spec10DropDown, 199)
+    UIDropDownMenu_JustifyText(Spec10DropDown, "LEFT")
+    if Clique.db.char.spec10Profile then
+        UIDropDownMenu_SetSelectedValue(Spec10DropDown, Clique.db.char.spec10Profile)
+    else
+        UIDropDownMenu_SetSelectedValue(Spec10DropDown, Clique.db.keys.profile)
+    end
+
+    local Spec11DropDown = CreateFrame("Frame", "CliqueSpec11DropDown", parent, "UIDropDownMenuTemplate")
+    Spec11DropDown:ClearAllPoints()
+    Spec11DropDown:SetPoint("TOPLEFT", Spec10DropDown, "BOTTOMLEFT", 0, 0)
+    Spec11DropDown:Show()
+    Spec11DropDown.label = Spec11DropDown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    Spec11DropDown.label:SetText(L["Spec 11:"])
+    Spec11DropDown.label:SetPoint("RIGHT", Spec11DropDown, "LEFT", 0, 0)
+    Spec11DropDown.label:SetHeight(16)
+
+    local function initialize(self, level)
+        local function OnClick(self)
+            UIDropDownMenu_SetSelectedID(Spec11DropDown, self:GetID())
+            Clique.db.char.spec11Profile = self.value
+            Clique:UpdateClicks()
+        end
+
+        local work = {}
+        for k,v in pairs(Clique.db.profiles) do 
+            table.insert(work, k)
+        end
+		table.sort(work) 
+
+        for idx,profile in ipairs(work) do
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = profile
+            info.func = OnClick
+            info.value = profile
+            UIDropDownMenu_AddButton(info, level)
+        end
+    end
+
+    UIDropDownMenu_Initialize(Spec11DropDown, initialize)
+    UIDropDownMenu_SetWidth(Spec11DropDown, 175);
+    UIDropDownMenu_SetButtonWidth(Spec11DropDown, 199)
+    UIDropDownMenu_JustifyText(Spec11DropDown, "LEFT")
+    if Clique.db.char.spec11Profile then
+        UIDropDownMenu_SetSelectedValue(Spec11DropDown, Clique.db.char.spec11Profile)
+    else
+        UIDropDownMenu_SetSelectedValue(Spec11DropDown, Clique.db.keys.profile)
+    end
+
+    local Spec12DropDown = CreateFrame("Frame", "CliqueSpec12DropDown", parent, "UIDropDownMenuTemplate")
+    Spec12DropDown:ClearAllPoints()
+    Spec12DropDown:SetPoint("TOPLEFT", Spec11DropDown, "BOTTOMLEFT", 0, 0)
+    Spec12DropDown:Show()
+    Spec12DropDown.label = Spec12DropDown:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    Spec12DropDown.label:SetText(L["Spec 12:"])
+    Spec12DropDown.label:SetPoint("RIGHT", Spec12DropDown, "LEFT", 0, 0)
+    Spec12DropDown.label:SetHeight(16)
+
+    local function initialize(self, level)
+        local function OnClick(self)
+            UIDropDownMenu_SetSelectedID(Spec12DropDown, self:GetID())
+            Clique.db.char.spec12Profile = self.value
+            Clique:UpdateClicks()
+        end
+
+        local work = {}
+        for k,v in pairs(Clique.db.profiles) do 
+            table.insert(work, k)
+        end
+		table.sort(work) 
+
+        for idx,profile in ipairs(work) do
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = profile
+            info.func = OnClick
+            info.value = profile
+            UIDropDownMenu_AddButton(info, level)
+        end
+    end
+
+    UIDropDownMenu_Initialize(Spec12DropDown, initialize)
+    UIDropDownMenu_SetWidth(Spec12DropDown, 175);
+    UIDropDownMenu_SetButtonWidth(Spec12DropDown, 199)
+    UIDropDownMenu_JustifyText(Spec12DropDown, "LEFT")
+    if Clique.db.char.spec12Profile then
+        UIDropDownMenu_SetSelectedValue(Spec12DropDown, Clique.db.char.spec12Profile)
+    else
+        UIDropDownMenu_SetSelectedValue(Spec12DropDown, Clique.db.keys.profile)
     end
 
     local function refreshOptions(self)
@@ -1950,17 +2360,67 @@ function Clique:CreateOptionsWidgets(parent)
         CliqueOptionsAnyDown:SetChecked(downClick)
 
         if switchSpec then
-            CliquePriSpecDropDown:Show()
-            CliqueSecSpecDropDown:Show()
-            if not Clique.db.char.primaryProfile then
-                Clique.db.char.primaryProfile = Clique.db.keys.profile
+            CliqueSpec1DropDown:Show()
+            CliqueSpec2DropDown:Show()
+            CliqueSpec3DropDown:Show()
+            CliqueSpec4DropDown:Show()
+            CliqueSpec5DropDown:Show()
+            CliqueSpec6DropDown:Show()
+            CliqueSpec7DropDown:Show()
+            CliqueSpec8DropDown:Show()
+            CliqueSpec9DropDown:Show()
+            CliqueSpec10DropDown:Show()
+            CliqueSpec11DropDown:Show()
+            CliqueSpec12DropDown:Show()
+            if not Clique.db.char.spec1Profile then
+                Clique.db.char.spec1Profile = Clique.db.keys.profile
             end
-            if not Clique.db.char.secondaryProfile then
-                Clique.db.char.secondaryProfile = Clique.db.keys.profile
+            if not Clique.db.char.spec2Profile then
+                Clique.db.char.spec2Profile = Clique.db.keys.profile
+            end
+            if not Clique.db.char.spec3Profile then
+                Clique.db.char.spec3Profile = Clique.db.keys.profile
+            end
+            if not Clique.db.char.spec4Profile then
+                Clique.db.char.spec4Profile = Clique.db.keys.profile
+            end
+            if not Clique.db.char.spec5Profile then
+                Clique.db.char.spec5Profile = Clique.db.keys.profile
+            end
+            if not Clique.db.char.spec6Profile then
+                Clique.db.char.spec6Profile = Clique.db.keys.profile
+            end
+            if not Clique.db.char.spec7Profile then
+                Clique.db.char.spec7Profile = Clique.db.keys.profile
+            end
+            if not Clique.db.char.spec8Profile then
+                Clique.db.char.spec8Profile = Clique.db.keys.profile
+            end
+            if not Clique.db.char.spec9Profile then
+                Clique.db.char.spec9Profile = Clique.db.keys.profile
+            end
+            if not Clique.db.char.spec10Profile then
+                Clique.db.char.spec10Profile = Clique.db.keys.profile
+            end
+            if not Clique.db.char.spec11Profile then
+                Clique.db.char.spec11Profile = Clique.db.keys.profile
+            end
+            if not Clique.db.char.spec12Profile then
+                Clique.db.char.spec12Profile = Clique.db.keys.profile
             end
         else
-            CliquePriSpecDropDown:Hide()
-            CliqueSecSpecDropDown:Hide()
+            CliqueSpec1DropDown:Hide()
+            CliqueSpec2DropDown:Hide()
+            CliqueSpec3DropDown:Hide()
+            CliqueSpec4DropDown:Hide()
+            CliqueSpec5DropDown:Hide()
+            CliqueSpec6DropDown:Hide()
+            CliqueSpec7DropDown:Hide()
+            CliqueSpec8DropDown:Hide()
+            CliqueSpec9DropDown:Hide()
+            CliqueSpec10DropDown:Hide()
+            CliqueSpec11DropDown:Hide()
+            CliqueSpec12DropDown:Hide()
         end
     end
 
