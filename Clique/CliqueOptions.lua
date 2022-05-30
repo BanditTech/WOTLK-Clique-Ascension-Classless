@@ -2359,68 +2359,17 @@ function Clique:CreateOptionsWidgets(parent)
         CliqueOptionsSpecSwitch:SetChecked(switchSpec)
         CliqueOptionsAnyDown:SetChecked(downClick)
 
-        if switchSpec then
-            CliqueSpec1DropDown:Show()
-            CliqueSpec2DropDown:Show()
-            CliqueSpec3DropDown:Show()
-            CliqueSpec4DropDown:Show()
-            CliqueSpec5DropDown:Show()
-            CliqueSpec6DropDown:Show()
-            CliqueSpec7DropDown:Show()
-            CliqueSpec8DropDown:Show()
-            CliqueSpec9DropDown:Show()
-            CliqueSpec10DropDown:Show()
-            CliqueSpec11DropDown:Show()
-            CliqueSpec12DropDown:Show()
-            if not Clique.db.char.spec1Profile then
-                Clique.db.char.spec1Profile = Clique.db.keys.profile
-            end
-            if not Clique.db.char.spec2Profile then
-                Clique.db.char.spec2Profile = Clique.db.keys.profile
-            end
-            if not Clique.db.char.spec3Profile then
-                Clique.db.char.spec3Profile = Clique.db.keys.profile
-            end
-            if not Clique.db.char.spec4Profile then
-                Clique.db.char.spec4Profile = Clique.db.keys.profile
-            end
-            if not Clique.db.char.spec5Profile then
-                Clique.db.char.spec5Profile = Clique.db.keys.profile
-            end
-            if not Clique.db.char.spec6Profile then
-                Clique.db.char.spec6Profile = Clique.db.keys.profile
-            end
-            if not Clique.db.char.spec7Profile then
-                Clique.db.char.spec7Profile = Clique.db.keys.profile
-            end
-            if not Clique.db.char.spec8Profile then
-                Clique.db.char.spec8Profile = Clique.db.keys.profile
-            end
-            if not Clique.db.char.spec9Profile then
-                Clique.db.char.spec9Profile = Clique.db.keys.profile
-            end
-            if not Clique.db.char.spec10Profile then
-                Clique.db.char.spec10Profile = Clique.db.keys.profile
-            end
-            if not Clique.db.char.spec11Profile then
-                Clique.db.char.spec11Profile = Clique.db.keys.profile
-            end
-            if not Clique.db.char.spec12Profile then
-                Clique.db.char.spec12Profile = Clique.db.keys.profile
-            end
-        else
-            CliqueSpec1DropDown:Hide()
-            CliqueSpec2DropDown:Hide()
-            CliqueSpec3DropDown:Hide()
-            CliqueSpec4DropDown:Hide()
-            CliqueSpec5DropDown:Hide()
-            CliqueSpec6DropDown:Hide()
-            CliqueSpec7DropDown:Hide()
-            CliqueSpec8DropDown:Hide()
-            CliqueSpec9DropDown:Hide()
-            CliqueSpec10DropDown:Hide()
-            CliqueSpec11DropDown:Hide()
-            CliqueSpec12DropDown:Hide()
+				if switchSpec then
+					for i=1,12 do
+						_G["CliqueSpec"..i.."DropDown"]:Show()
+						if not Clique.db.char["spec"..i.."Profile"] then
+							Clique.db.char["spec"..i.."Profile"] = Clique.db.keys.profile
+						end
+					end
+				else
+					for i=1,12 do
+						_G["CliqueSpec"..i.."DropDown"]:Hide()
+					end
         end
     end
 
