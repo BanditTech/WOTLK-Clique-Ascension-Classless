@@ -1869,7 +1869,7 @@ function Clique:CreateOptionsWidgets(parent)
 			if i == 1 then
 				DD["Spec"..i.."DropDown"]:SetPoint("TOPLEFT", switchSpec, "BOTTOMLEFT", 65, 0)
 			else
-				DD["Spec"..i.."DropDown"]:SetPoint("TOPLEFT", DD["Spec"..(i-1).."DropDown"], "BOTTOMLEFT", 65, 0)
+				DD["Spec"..i.."DropDown"]:SetPoint("TOPLEFT", DD["Spec"..(i-1).."DropDown"], "BOTTOMLEFT", 0, 0)
 			end
 			DD["Spec"..i.."DropDown"]:Show()
 			DD["Spec"..i.."DropDown"].label = DD["Spec"..i.."DropDown"]:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
